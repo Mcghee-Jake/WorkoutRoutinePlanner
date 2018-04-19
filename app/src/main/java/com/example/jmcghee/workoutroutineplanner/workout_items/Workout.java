@@ -1,16 +1,17 @@
 package com.example.jmcghee.workoutroutineplanner.workout_items;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public class Workout {
     private String name;
-    private ArrayList<WorkoutSection> workoutSections;
+    private List<WorkoutSection> workoutSections;
 
     public Workout(String name) {
         this.name = name;
     }
 
-    public Workout(String name, ArrayList<WorkoutSection> workoutSections) {
+    public Workout(String name, List<WorkoutSection> workoutSections) {
         this.name = name;
         this.workoutSections = workoutSections;
     }
@@ -23,11 +24,15 @@ public class Workout {
         this.name = name;
     }
 
-    public ArrayList<WorkoutSection> getWorkoutSections() {
+    public List<WorkoutSection> getWorkoutSections() {
         return workoutSections;
     }
 
-    public void setWorkoutSections(ArrayList<WorkoutSection> workoutSections) {
+    public void setWorkoutSections(List<WorkoutSection> workoutSections) {
         this.workoutSections = workoutSections;
+    }
+
+    public void addWorkoutSection(WorkoutSection section) {
+        workoutSections.add(section);
     }
 }

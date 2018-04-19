@@ -31,8 +31,8 @@ public class Exercise {
         return isIsometric;
     }
 
-    public void setIsometric(boolean isometric) {
-        isIsometric = isometric;
+    public void setIsometric(boolean isIsometric) {
+        this.isIsometric = isIsometric;
     }
 
     public int getReps() {
