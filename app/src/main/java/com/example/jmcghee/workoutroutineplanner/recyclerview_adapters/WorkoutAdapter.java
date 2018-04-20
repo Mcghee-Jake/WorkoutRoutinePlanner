@@ -14,15 +14,21 @@ import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
-    private List<Workout> workoutsList;
+    final private List<Workout> workoutsList;
+    final private WorkoutClickListener mOnClickListener;
+
+    public interface WorkoutClickListener {
+        void onWorkoutClicked(int index);
+    }
 
     /**
      * Constructor
      *
      * @param workoutsList The list of workouts that will be displayed by this adapter
      */
-    public WorkoutAdapter(List<Workout> workoutsList) {
+    public WorkoutAdapter(List<Workout> workoutsList, WorkoutClickListener listener) {
         this.workoutsList = workoutsList;
+        mOnClickListener = listener;
     }
 
 
@@ -64,13 +70,20 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         return workoutsList.size();
     }
 
-    class WorkoutViewHolder extends RecyclerView.ViewHolder {
+    class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView workoutName;
 
         public WorkoutViewHolder(View itemView) {
             super(itemView);
             workoutName = (TextView) itemView.findViewById(R.id.tv_title);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int index = getAdapterPosition();
+            mOnClickListener.onWorkoutClicked(index);
         }
     }
 }

@@ -12,7 +12,8 @@ import com.example.jmcghee.workoutroutineplanner.workout_items.WorkoutSection;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        WorkoutAdapter.WorkoutClickListener {
 
     private WorkoutAdapter workoutAdapter;
 
@@ -34,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
         workoutRecyclerView.setHasFixedSize(true);
 
         // Create a new adapter with the sample workouts loaded in
-        workoutAdapter = new WorkoutAdapter(createDummyData());
+        workoutAdapter = new WorkoutAdapter(createDummyData(), this);
 
         // Attach the adapter to the recycler view
         workoutRecyclerView.setAdapter(workoutAdapter);
+    }
+
+    @Override
+    public void onWorkoutClicked(int index) {
+        // TODO create and launch workoutSection activity
     }
 
     /**
@@ -127,4 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
         return workouts;
     }
+
+
 }
