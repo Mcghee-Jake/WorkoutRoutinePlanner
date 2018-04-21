@@ -14,7 +14,7 @@ import java.util.List;
 
 public class WorkoutSectionsAdapter extends RecyclerView.Adapter<WorkoutSectionsAdapter.WorkoutSectionViewHolder> {
 
-    final private List<WorkoutSection> workoutSectionsList;
+    final private List<WorkoutSection> workoutSections;
     final private WorkoutSectionClickListener mOnClickListener;
 
     public interface WorkoutSectionClickListener {
@@ -24,10 +24,11 @@ public class WorkoutSectionsAdapter extends RecyclerView.Adapter<WorkoutSections
     /**
      * Constructor
      *
-     * @param workoutSectionsList The list of workouts that will be displayed by this adapter
+     * @param workoutSections The list of workouts that will be displayed by this adapter
+     * @param listener The listener that will be called when clicked
      */
-    public WorkoutSectionsAdapter(List<WorkoutSection> workoutSectionsList, WorkoutSectionClickListener listener) {
-        this.workoutSectionsList = workoutSectionsList;
+    public WorkoutSectionsAdapter(List<WorkoutSection> workoutSections, WorkoutSectionClickListener listener) {
+        this.workoutSections = workoutSections;
         mOnClickListener = listener;
     }
 
@@ -41,7 +42,7 @@ public class WorkoutSectionsAdapter extends RecyclerView.Adapter<WorkoutSections
     @Override
     public WorkoutSectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.simple_title_viewholder, parent, false);
+        View view = inflater.inflate(R.layout.simple_name_viewholder, parent, false);
         WorkoutSectionViewHolder viewHolder = new WorkoutSectionViewHolder(view);
 
         return viewHolder;
@@ -56,17 +57,17 @@ public class WorkoutSectionsAdapter extends RecyclerView.Adapter<WorkoutSections
     @Override
     public void onBindViewHolder(@NonNull WorkoutSectionViewHolder holder, int position) {
         // Set the textView in the ViewHolder to name of the workoutSection
-        holder.workoutSectionName.setText(workoutSectionsList.get(position).getName());
+        holder.workoutSectionName.setText(workoutSections.get(position).getName());
     }
 
     /**
      * This tells the adapter the number of items to display
      *
-     * @return The number of items in the workoutList
+     * @return The number of items in the workoutSections list
      */
     @Override
     public int getItemCount() {
-        return workoutSectionsList.size();
+        return workoutSections.size();
     }
 
     public class WorkoutSectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,7 +76,7 @@ public class WorkoutSectionsAdapter extends RecyclerView.Adapter<WorkoutSections
 
         public WorkoutSectionViewHolder(View itemView) {
             super(itemView);
-            workoutSectionName = (TextView) itemView.findViewById(R.id.tv_simple_title);
+            workoutSectionName = itemView.findViewById(R.id.tv_simple_name);
             itemView.setOnClickListener(this);
         }
 

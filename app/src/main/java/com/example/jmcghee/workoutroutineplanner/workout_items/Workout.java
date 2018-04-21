@@ -4,7 +4,7 @@ package com.example.jmcghee.workoutroutineplanner.workout_items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workout {
+public class Workout{
     private String name;
     private List<WorkoutSection> workoutSections;
 

@@ -12,9 +12,9 @@ import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
 
 import java.util.List;
 
-public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.WorkoutViewHolder> {
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
-    final private List<Workout> workoutsList;
+    final private List<Workout> workouts;
     final private WorkoutClickListener mOnClickListener;
 
     public interface WorkoutClickListener {
@@ -24,10 +24,11 @@ public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.Workou
     /**
      * Constructor
      *
-     * @param workoutsList The list of workouts that will be displayed by this adapter
+     * @param workouts The list of workouts that will be displayed by this adapter
+     * @param listener The listener that will be called when clicked
      */
-    public WorkoutsAdapter(List<Workout> workoutsList, WorkoutClickListener listener) {
-        this.workoutsList = workoutsList;
+    public WorkoutAdapter(List<Workout> workouts, WorkoutClickListener listener) {
+        this.workouts = workouts;
         mOnClickListener = listener;
     }
 
@@ -42,7 +43,7 @@ public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.Workou
     @Override
     public WorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.simple_title_viewholder, parent, false);
+        View view = inflater.inflate(R.layout.simple_name_viewholder, parent, false);
         WorkoutViewHolder viewHolder = new WorkoutViewHolder(view);
 
         return viewHolder;
@@ -56,18 +57,18 @@ public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.Workou
      */
     @Override
     public void onBindViewHolder(@NonNull WorkoutViewHolder holder, int position) {
-        // Set the textView in the ViewHolder to name of the workout
-        holder.workoutName.setText(workoutsList.get(position).getName());
+        // Set the textView in the ViewHolder to the name of the workout
+        holder.workoutName.setText(workouts.get(position).getName());
     }
 
     /**
      * This tells the adapter the number of items to display
      *
-     * @return The number of items in the workoutList
+     * @return The number of items in the workouts list
      */
     @Override
     public int getItemCount() {
-        return workoutsList.size();
+        return workouts.size();
     }
 
     class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -76,7 +77,7 @@ public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.Workou
 
         public WorkoutViewHolder(View itemView) {
             super(itemView);
-            workoutName = (TextView) itemView.findViewById(R.id.tv_simple_title);
+            workoutName = itemView.findViewById(R.id.tv_simple_name);
             itemView.setOnClickListener(this);
         }
 

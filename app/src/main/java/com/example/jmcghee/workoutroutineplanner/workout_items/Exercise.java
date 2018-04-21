@@ -33,7 +33,7 @@ public class Exercise implements Serializable {
         return isIsometric;
     }
 
-    public void setIsometric(boolean isIsometric) {
+    public void setIsIsometric(boolean isIsometric) {
         this.isIsometric = isIsometric;
     }
 
