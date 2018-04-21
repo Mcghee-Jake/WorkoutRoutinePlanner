@@ -1,6 +1,7 @@
 package com.example.jmcghee.workoutroutineplanner.workout_items;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Workout {
@@ -9,6 +10,7 @@ public class Workout {
 
     public Workout(String name) {
         this.name = name;
+        workoutSections = new ArrayList();
     }
 
     public Workout(String name, List<WorkoutSection> workoutSections) {

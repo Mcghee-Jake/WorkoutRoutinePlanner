@@ -12,7 +12,7 @@ import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
 
 import java.util.List;
 
-public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
+public class WorkoutsAdapter extends RecyclerView.Adapter<WorkoutsAdapter.WorkoutViewHolder> {
 
     final private List<Workout> workoutsList;
     final private WorkoutClickListener mOnClickListener;
@@ -26,7 +26,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
      *
      * @param workoutsList The list of workouts that will be displayed by this adapter
      */
-    public WorkoutAdapter(List<Workout> workoutsList, WorkoutClickListener listener) {
+    public WorkoutsAdapter(List<Workout> workoutsList, WorkoutClickListener listener) {
         this.workoutsList = workoutsList;
         mOnClickListener = listener;
     }
@@ -76,7 +76,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
 
         public WorkoutViewHolder(View itemView) {
             super(itemView);
-            workoutName = (TextView) itemView.findViewById(R.id.tv_title);
+            workoutName = (TextView) itemView.findViewById(R.id.tv_simple_title);
             itemView.setOnClickListener(this);
         }
 

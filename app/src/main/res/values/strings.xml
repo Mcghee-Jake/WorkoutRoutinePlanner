@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Workout Routine Planner</string>
+    <string name="workout_sections_extra">WORKOUT_SECTIONS_EXTRA</string>
 </resources>

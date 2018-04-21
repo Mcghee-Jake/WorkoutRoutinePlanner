@@ -1,13 +1,16 @@
 package com.example.jmcghee.workoutroutineplanner.workout_items;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class WorkoutSection {
+public class WorkoutSection implements Serializable {
     private String name;
     private List<Exercise> exercises;
 
     public WorkoutSection(String name) {
         this.name = name;
+        exercises = new ArrayList();
     }
 
     public WorkoutSection(String name, List<Exercise> exercises) {

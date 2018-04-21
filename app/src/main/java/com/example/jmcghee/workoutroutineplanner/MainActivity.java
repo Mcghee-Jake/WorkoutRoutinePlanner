@@ -1,21 +1,23 @@
 package com.example.jmcghee.workoutroutineplanner;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.jmcghee.workoutroutineplanner.recyclerview_adapters.WorkoutAdapter;
+import com.example.jmcghee.workoutroutineplanner.recyclerview_adapters.WorkoutsAdapter;
 import com.example.jmcghee.workoutroutineplanner.workout_items.Exercise;
 import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
 import com.example.jmcghee.workoutroutineplanner.workout_items.WorkoutSection;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements
-        WorkoutAdapter.WorkoutClickListener {
+public class MainActivity extends AppCompatActivity implements WorkoutsAdapter.WorkoutClickListener {
 
-    private WorkoutAdapter workoutAdapter;
+    List<Workout> workouts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,28 @@ public class MainActivity extends AppCompatActivity implements
         // Set fixed sized to true to improve performance
         workoutRecyclerView.setHasFixedSize(true);
 
+        // Load the sample workouts
+        workouts = createDummyData();
+
         // Create a new adapter with the sample workouts loaded in
-        workoutAdapter = new WorkoutAdapter(createDummyData(), this);
+        WorkoutsAdapter workoutsAdapter = new WorkoutsAdapter(workouts, this);
 
         // Attach the adapter to the recycler view
-        workoutRecyclerView.setAdapter(workoutAdapter);
+        workoutRecyclerView.setAdapter(workoutsAdapter);
     }
 
+    /**
+     * Starts a WorkoutSectionsActivity for a given workout
+     *
+     * @param index The index of the workout that was clicked
+     */
     @Override
     public void onWorkoutClicked(int index) {
-        // TODO create and launch workoutSection activity
+        Intent intent = new Intent(MainActivity.this, WorkoutSectionsActivity.class);
+        // Pass the data to the next activity
+        // In this case the data is the list of workoutSections of the specific Workout that was clicked
+        intent.putExtra(getString(R.string.workout_sections_extra), (Serializable) workouts.get(index).getWorkoutSections());
+        startActivity(intent);
     }
 
     /**
@@ -51,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements
      */
     private List<Workout> createDummyData(){
 
-        List<Workout> workouts = null;
+        List<Workout> workouts = new ArrayList();
 
         Workout ringsDay = new Workout("Rings Day");
 

@@ -1,6 +1,8 @@
 package com.example.jmcghee.workoutroutineplanner.workout_items;
 
-public class Exercise {
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
     private String name;
     private int sets;
     private boolean isIsometric;
