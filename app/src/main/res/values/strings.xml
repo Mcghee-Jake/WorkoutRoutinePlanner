@@ -2,4 +2,7 @@
     <string name="app_name">Workout Routine Planner</string>
     <string name="workout_sections_extra">WORKOUT_SECTIONS_EXTRA</string>
     <string name="exercises_extra">EXERCISES_EXTRA</string>
+    <string name="workout_dialog">Workout Name</string>
+    <string name="save">Save</string>
+    <string name="workout_dialog_title">New Workout</string>
 </resources>

@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.jmcghee.workoutroutineplanner.recyclerview_adapters.ExercisesAdapter;
-import com.example.jmcghee.workoutroutineplanner.workout_items.Exercise;
+import com.example.jmcghee.workoutroutineplanner.database.model.Exercise;
 
 import java.util.List;
 

@@ -1,13 +1,48 @@
-package com.example.jmcghee.workoutroutineplanner.data;
+package com.example.jmcghee.workoutroutineplanner.database;
 
-import com.example.jmcghee.workoutroutineplanner.workout_items.Exercise;
-import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
-import com.example.jmcghee.workoutroutineplanner.workout_items.WorkoutSection;
+import android.content.ContentValues;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.jmcghee.workoutroutineplanner.database.model.Exercise;
+import com.example.jmcghee.workoutroutineplanner.database.model.Workout;
+import com.example.jmcghee.workoutroutineplanner.database.model.WorkoutSection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataUtils {
+
+    public static void insertSampleWorkouts(SQLiteDatabase db) {
+        if (db == null) {
+            return;
+        }
+
+        List<ContentValues> list = new ArrayList<>();
+
+        ContentValues cv = new ContentValues();
+        cv.put(WorkoutPlannerContract.workout.TABLE_NAME, "Rings Day");
+        list.add(cv);
+
+        cv = new ContentValues();
+        cv.put(WorkoutPlannerContract.workout.TABLE_NAME, "Legs Day");
+        list.add(cv);
+
+        try {
+            db.beginTransaction();
+            db.delete(WorkoutPlannerContract.workout.TABLE_NAME, null, null);
+            for (ContentValues c : list) {
+                db.insert(WorkoutPlannerContract.workout.TABLE_NAME, null, c);
+            }
+            db.setTransactionSuccessful();
+        } catch (SQLException e){
+
+        } finally {
+            db.endTransaction();
+        }
+
+
+    }
 
     /**
      * This loads the sample workouts for the app

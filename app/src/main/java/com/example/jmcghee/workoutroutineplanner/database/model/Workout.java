@@ -1,4 +1,4 @@
-package com.example.jmcghee.workoutroutineplanner.workout_items;
+package com.example.jmcghee.workoutroutineplanner.database.model;
 
 
 import java.util.ArrayList;

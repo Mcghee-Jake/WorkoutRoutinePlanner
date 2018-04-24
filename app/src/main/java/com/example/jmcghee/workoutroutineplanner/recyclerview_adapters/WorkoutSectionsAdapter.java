@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jmcghee.workoutroutineplanner.R;
-import com.example.jmcghee.workoutroutineplanner.workout_items.WorkoutSection;
+import com.example.jmcghee.workoutroutineplanner.database.model.WorkoutSection;
 
 import java.util.List;
 

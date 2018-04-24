@@ -1,14 +1,19 @@
 package com.example.jmcghee.workoutroutineplanner;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 
-import com.example.jmcghee.workoutroutineplanner.data.DataUtils;
+import com.example.jmcghee.workoutroutineplanner.database.DataUtils;
 import com.example.jmcghee.workoutroutineplanner.recyclerview_adapters.WorkoutAdapter;
-import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
+import com.example.jmcghee.workoutroutineplanner.database.model.Workout;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,10 +43,38 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         workouts = DataUtils.createDummyData();
 
         // Create a new adapter with the sample workouts loaded in
-        WorkoutAdapter workoutAdapter = new WorkoutAdapter(workouts, this);
+        WorkoutAdapter workoutAdapter = new WorkoutAdapter(null, this);
 
         // Attach the adapter to the recycler view
         workoutRecyclerView.setAdapter(workoutAdapter);
+
+        // Setup the FAB
+        FloatingActionButton fab = findViewById(R.id.fab_workout);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWorkoutDialog();
+            }
+        });
+    }
+
+    /**
+     * Shows the dialog to add a new workout to the list
+     */
+    private void showWorkoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        builder.setView(inflater.inflate(R.layout.workout_dialog, null));
+        builder.setTitle(R.string.workout_dialog_title);
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO do stuff here
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**

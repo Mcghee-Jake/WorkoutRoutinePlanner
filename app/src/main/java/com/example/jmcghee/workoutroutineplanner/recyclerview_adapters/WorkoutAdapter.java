@@ -1,5 +1,6 @@
 package com.example.jmcghee.workoutroutineplanner.recyclerview_adapters;
 
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jmcghee.workoutroutineplanner.R;
-import com.example.jmcghee.workoutroutineplanner.workout_items.Workout;
-
-import java.util.List;
+import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
-    final private List<Workout> workouts;
+    final private Cursor workoutsCursor;
     final private WorkoutClickListener mOnClickListener;
 
     public interface WorkoutClickListener {
@@ -24,11 +23,11 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     /**
      * Constructor
      *
-     * @param workouts The list of workouts that will be displayed by this adapter
+     * @param workoutsCursor The list of workoutsCursor that will be displayed by this adapter
      * @param listener The listener that will be called when clicked
      */
-    public WorkoutAdapter(List<Workout> workouts, WorkoutClickListener listener) {
-        this.workouts = workouts;
+    public WorkoutAdapter(Cursor workoutsCursor, WorkoutClickListener listener) {
+        this.workoutsCursor = workoutsCursor;
         mOnClickListener = listener;
     }
 
@@ -57,18 +56,22 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
      */
     @Override
     public void onBindViewHolder(@NonNull WorkoutViewHolder holder, int position) {
+        if (!workoutsCursor.moveToPosition(position))
+            return; // exit if returned null
+        // Get the name of the workout
+        String name = workoutsCursor.getString(workoutsCursor.getColumnIndex(WorkoutPlannerContract.workout.COLUMN_NAME));
         // Set the textView in the ViewHolder to the name of the workout
-        holder.workoutName.setText(workouts.get(position).getName());
+        holder.workoutName.setText(name);
     }
 
     /**
      * This tells the adapter the number of items to display
      *
-     * @return The number of items in the workouts list
+     * @return The number of items in the workoutsCursor list
      */
     @Override
     public int getItemCount() {
-        return workouts.size();
+        return workoutsCursor.getCount();
     }
 
     class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
