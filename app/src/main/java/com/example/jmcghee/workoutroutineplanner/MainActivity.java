@@ -2,6 +2,8 @@ package com.example.jmcghee.workoutroutineplanner;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.jmcghee.workoutroutineplanner.database.DataUtils;
+import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract;
+import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerDbHelper;
 import com.example.jmcghee.workoutroutineplanner.recyclerview_adapters.WorkoutAdapter;
 import com.example.jmcghee.workoutroutineplanner.database.model.Workout;
 
@@ -20,7 +24,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WorkoutAdapter.WorkoutClickListener {
 
-    List<Workout> workouts;
+    private List<Workout> workouts;
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +44,15 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         // Set fixed sized to true to improve performance
         workoutRecyclerView.setHasFixedSize(true);
 
-        // Load the sample workouts
-        workouts = DataUtils.createDummyData();
+        // Get the database
+        WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+
+        // Insert the sample data
+        DataUtils.insertSampleWorkouts(mDb);
 
         // Create a new adapter with the sample workouts loaded in
-        WorkoutAdapter workoutAdapter = new WorkoutAdapter(null, this);
+        WorkoutAdapter workoutAdapter = new WorkoutAdapter(getAllWorkouts(), this);
 
         // Attach the adapter to the recycler view
         workoutRecyclerView.setAdapter(workoutAdapter);
@@ -56,6 +65,18 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
                 showWorkoutDialog();
             }
         });
+    }
+
+    private Cursor getAllWorkouts() {
+        return mDb.query(
+                WorkoutPlannerContract.workout.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                WorkoutPlannerContract.workout.COLUMN_NAME
+        );
     }
 
     /**
