@@ -24,13 +24,20 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WorkoutAdapter.WorkoutClickListener {
 
-    private List<Workout> workouts;
+    private Cursor workouts;
     private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Get the database
+        WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+
+        // Insert the sample data
+        DataUtils.insertSampleWorkouts(mDb);
 
         // Initialize the recycler view
         RecyclerView workoutRecyclerView = findViewById(R.id.rv_workouts);
@@ -43,13 +50,6 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
 
         // Set fixed sized to true to improve performance
         workoutRecyclerView.setHasFixedSize(true);
-
-        // Get the database
-        WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
-        mDb = dbHelper.getWritableDatabase();
-
-        // Insert the sample data
-        DataUtils.insertSampleWorkouts(mDb);
 
         // Create a new adapter with the sample workouts loaded in
         WorkoutAdapter workoutAdapter = new WorkoutAdapter(getAllWorkouts(), this);
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
      * Shows the dialog to add a new workout to the list
      */
     private void showWorkoutDialog() {
+        // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         builder.setView(inflater.inflate(R.layout.workout_dialog, null));
@@ -94,7 +95,10 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
             }
         });
 
+        // Create the dialog
         final AlertDialog dialog = builder.create();
+
+        // Show the dialog
         dialog.show();
     }
 
@@ -108,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         Intent intent = new Intent(MainActivity.this, WorkoutSectionsActivity.class);
         // Pass the data to the next activity
         // In this case the data is the list of workoutSections in the specific Workout that was clicked
-        intent.putExtra(getString(R.string.workout_sections_extra), (Serializable) workouts.get(index).getWorkoutSections());
+
+       // intent.putExtra(getString(R.string.workout_sections_extra), (Serializable) workouts.get(index).getWorkoutSections());
         startActivity(intent);
     }
 

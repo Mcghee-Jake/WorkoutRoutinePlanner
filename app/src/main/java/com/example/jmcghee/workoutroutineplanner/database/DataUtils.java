@@ -21,11 +21,11 @@ public class DataUtils {
         List<ContentValues> list = new ArrayList<>();
 
         ContentValues cv = new ContentValues();
-        cv.put(WorkoutPlannerContract.workout.TABLE_NAME, "Rings Day");
+        cv.put(WorkoutPlannerContract.workout.COLUMN_NAME, "Rings Day");
         list.add(cv);
 
         cv = new ContentValues();
-        cv.put(WorkoutPlannerContract.workout.TABLE_NAME, "Legs Day");
+        cv.put(WorkoutPlannerContract.workout.COLUMN_NAME, "Legs Day");
         list.add(cv);
 
         try {
