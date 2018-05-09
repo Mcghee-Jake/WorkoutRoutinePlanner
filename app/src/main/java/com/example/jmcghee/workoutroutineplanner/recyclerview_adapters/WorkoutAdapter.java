@@ -13,7 +13,7 @@ import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
-    final private Cursor workoutsCursor;
+    private Cursor workoutsCursor;
     final private WorkoutClickListener mOnClickListener;
 
     public interface WorkoutClickListener {
@@ -72,6 +72,16 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     @Override
     public int getItemCount() {
         return workoutsCursor.getCount();
+    }
+
+    public void updateCursor(Cursor newCursor) {
+        // Exit if new cursor is null
+        if (newCursor == null) return;
+        // Close the old cursor
+        if (workoutsCursor != null) workoutsCursor.close();
+        // Switch to the new cursor
+        workoutsCursor = newCursor;
+        this.notifyDataSetChanged();
     }
 
     class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

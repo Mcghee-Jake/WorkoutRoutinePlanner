@@ -1,5 +1,6 @@
 package com.example.jmcghee.workoutroutineplanner;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.jmcghee.workoutroutineplanner.database.DataUtils;
 import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract;
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WorkoutAdapter.WorkoutClickListener {
 
-    private Cursor workouts;
+    private WorkoutAdapter workoutAdapter;
     private SQLiteDatabase mDb;
 
     @Override
@@ -35,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         // Get the database
         WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
-
-        // Insert the sample data
-        DataUtils.insertSampleWorkouts(mDb);
 
         // Initialize the recycler view
         RecyclerView workoutRecyclerView = findViewById(R.id.rv_workouts);
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         workoutRecyclerView.setHasFixedSize(true);
 
         // Create a new adapter with the sample workouts loaded in
-        WorkoutAdapter workoutAdapter = new WorkoutAdapter(getAllWorkouts(), this);
+        workoutAdapter = new WorkoutAdapter(getAllWorkouts(), this);
 
         // Attach the adapter to the recycler view
         workoutRecyclerView.setAdapter(workoutAdapter);
@@ -91,7 +90,13 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO do stuff here
+                // Get the name of the workout
+                EditText workoutNameEditText = findViewById(R.id.et_workout_dialog);
+                String workoutName = workoutNameEditText.getText().toString();
+                // Add it to the database
+                addWorkoutToDatabase(workoutName);
+                // Update the adapter
+                workoutAdapter.updateCursor(getAllWorkouts());
             }
         });
 
@@ -100,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
 
         // Show the dialog
         dialog.show();
+    }
+
+    private long addWorkoutToDatabase(String name) {
+        ContentValues cv = new ContentValues();
+        cv.put(WorkoutPlannerContract.workout.COLUMN_NAME, name);
+
+        return mDb.insert(WorkoutPlannerContract.workout.TABLE_NAME, null, cv);
     }
 
     /**
