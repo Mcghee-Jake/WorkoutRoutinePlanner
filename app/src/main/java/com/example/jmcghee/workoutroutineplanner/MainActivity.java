@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         final RecyclerView workoutRecyclerView = findViewById(R.id.rv_workouts);
 
         // Create a layout manager for the recycler view
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         // Set the layout manager to the recycler view
         workoutRecyclerView.setLayoutManager(layoutManager);
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         workoutRecyclerView.setAdapter(workoutAdapter);
 
         // Setup the FAB
-        FloatingActionButton fab = findViewById(R.id.fab_workout);
+        final FloatingActionButton fab = findViewById(R.id.fab_workout);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
      */
     private void showWorkoutDialog() {
         // Build the dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         final View dialogView = (inflater.inflate(R.layout.workout_dialog, null));
         builder.setView(dialogView);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
      */
     @Override
     public void onWorkoutClicked(int index) {
-        Intent intent = new Intent(MainActivity.this, WorkoutSectionsActivity.class);
+        final Intent intent = new Intent(MainActivity.this, WorkoutSectionsActivity.class);
         // Pass the data to the next activity
         // In this case the data is the list of workoutSections in the specific Workout that was clicked
 

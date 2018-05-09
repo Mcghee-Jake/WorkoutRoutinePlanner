@@ -41,9 +41,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     @NonNull
     @Override
     public WorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.simple_name_viewholder, parent, false);
-        WorkoutViewHolder viewHolder = new WorkoutViewHolder(view);
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View view = inflater.inflate(R.layout.simple_name_viewholder, parent, false);
+        final WorkoutViewHolder viewHolder = new WorkoutViewHolder(view);
 
         return viewHolder;
     }
@@ -59,7 +59,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         if (!workoutsCursor.moveToPosition(position))
             return; // exit if returned null
         // Get the name of the workout
-        String name = workoutsCursor.getString(workoutsCursor.getColumnIndex(WorkoutPlannerContract.workout.COLUMN_NAME));
+        final String name = workoutsCursor.getString(workoutsCursor.getColumnIndex(WorkoutPlannerContract.workout.COLUMN_NAME));
         // Set the textView in the ViewHolder to the name of the workout
         holder.workoutName.setText(name);
     }
@@ -86,7 +86,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
 
     class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView workoutName;
+        final TextView workoutName;
 
         public WorkoutViewHolder(View itemView) {
             super(itemView);
@@ -96,7 +96,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
 
         @Override
         public void onClick(View v) {
-            int index = getAdapterPosition();
+            final int index = getAdapterPosition();
             mOnClickListener.onWorkoutClicked(index);
         }
     }
