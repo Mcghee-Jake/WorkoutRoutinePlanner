@@ -3,6 +3,7 @@ package com.example.jmcghee.workoutroutineplanner.recyclerview_adapters;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,8 @@ import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
 
     private Cursor workoutsCursor;
-    final private WorkoutClickListener mOnClickListener;
+    private final WorkoutClickListener mOnClickListener;
+    private final SparseBooleanArray selectedItemIds;
 
     public interface WorkoutClickListener {
         void onWorkoutClicked(int index);
@@ -29,6 +31,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     public WorkoutAdapter(Cursor workoutsCursor, WorkoutClickListener listener) {
         this.workoutsCursor = workoutsCursor;
         mOnClickListener = listener;
+        selectedItemIds = new SparseBooleanArray();
     }
 
 

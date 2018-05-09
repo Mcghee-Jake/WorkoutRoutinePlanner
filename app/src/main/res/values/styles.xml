@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- To Enable the Contextual Action Bar to overlay the regular Action Bar -->
+        <item name="windowActionModeOverlay">true</item>
+        <!--  For Contextual Action Bar background color -->
+        <item name="actionModeBackground">@color/colorAccent</item>
     </style>
 
 </resources>

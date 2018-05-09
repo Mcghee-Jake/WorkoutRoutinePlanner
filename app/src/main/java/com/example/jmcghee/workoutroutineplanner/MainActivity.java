@@ -24,6 +24,8 @@ import com.example.jmcghee.workoutroutineplanner.database.model.Workout;
 import java.io.Serializable;
 import java.util.List;
 
+// CAB tutorial - http://www.w3ma.com/android-contextual-action-bar/
+
 public class MainActivity extends AppCompatActivity implements WorkoutAdapter.WorkoutClickListener {
 
     private WorkoutAdapter workoutAdapter;
