@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         setContentView(R.layout.activity_main);
 
         // Get the database
-        WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
+        final WorkoutPlannerDbHelper dbHelper = new WorkoutPlannerDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
 
         // Initialize the recycler view
-        RecyclerView workoutRecyclerView = findViewById(R.id.rv_workouts);
+        final RecyclerView workoutRecyclerView = findViewById(R.id.rv_workouts);
 
         // Create a layout manager for the recycler view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -85,14 +85,17 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        builder.setView(inflater.inflate(R.layout.workout_dialog, null));
+        final View dialogView = (inflater.inflate(R.layout.workout_dialog, null));
+        builder.setView(dialogView);
+
+        final EditText workoutNameEditText = dialogView.findViewById(R.id.et_workout_dialog);
+
         builder.setTitle(R.string.workout_dialog_title);
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Get the name of the workout
-                EditText workoutNameEditText = findViewById(R.id.et_workout_dialog);
-                String workoutName = workoutNameEditText.getText().toString();
+                final String workoutName = workoutNameEditText.getText().toString();
                 // Add it to the database
                 addWorkoutToDatabase(workoutName);
                 // Update the adapter
