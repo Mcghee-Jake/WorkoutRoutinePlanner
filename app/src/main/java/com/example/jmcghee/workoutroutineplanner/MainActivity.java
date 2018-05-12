@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,10 +27,12 @@ import java.util.List;
 
 // CAB tutorial - http://www.w3ma.com/android-contextual-action-bar/
 
-public class MainActivity extends AppCompatActivity implements WorkoutAdapter.WorkoutClickListener {
+public class MainActivity extends AppCompatActivity
+        implements WorkoutAdapter.WorkoutClickListener, ActionModeViewCallbacks {
 
     private WorkoutAdapter workoutAdapter;
     private SQLiteDatabase mDb;
+    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,4 +137,25 @@ public class MainActivity extends AppCompatActivity implements WorkoutAdapter.Wo
         startActivity(intent);
     }
 
+    @Override
+    public void onListItemSelected(int position) {
+        workoutAdapter.toggleSelection(position);
+
+        final boolean hasCheckedItems = workoutAdapter.getSelectedCount() > 0;
+
+        if (hasCheckedItems && actionMode == null) {
+            // some items are selected, start the actionMode
+            
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode() {
+
+    }
+
+    @Override
+    public void onDeleteActionClicked() {
+
+    }
 }

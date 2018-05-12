@@ -9,14 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.jmcghee.workoutroutineplanner.ActionModeAdapterCallbacks;
 import com.example.jmcghee.workoutroutineplanner.R;
 import com.example.jmcghee.workoutroutineplanner.database.WorkoutPlannerContract;
 
-public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder> {
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>
+    implements ActionModeAdapterCallbacks {
 
     private Cursor workoutsCursor;
     private final WorkoutClickListener mOnClickListener;
     private final SparseBooleanArray selectedItemIds;
+
 
     public interface WorkoutClickListener {
         void onWorkoutClicked(int index);
@@ -65,6 +68,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
         final String name = workoutsCursor.getString(workoutsCursor.getColumnIndex(WorkoutPlannerContract.workout.COLUMN_NAME));
         // Set the textView in the ViewHolder to the name of the workout
         holder.workoutName.setText(name);
+        // Change the view state if the item gets selected on long press
+        holder.itemView.setActivated(selectedItemIds.get(position));
+
     }
 
     /**
@@ -75,6 +81,27 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.WorkoutV
     @Override
     public int getItemCount() {
         return workoutsCursor.getCount();
+    }
+
+    @Override
+    public void toggleSelection(int position) {
+        if (selectedItemIds.get(position)) {
+            selectedItemIds.delete(position);
+        } else {
+            selectedItemIds.put(position, true);
+        }
+        notifyItemChanged(position);
+    }
+
+    @Override
+    public void clearSelections() {
+        selectedItemIds.clear();
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getSelectedCount() {
+        return selectedItemIds.size();
     }
 
     public void updateCursor(Cursor newCursor) {
